@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cijfer Packs</title>
+<style>
+:root{--bg:#f2f0ea;--fg:#16161a;--mut:#6b6b73;--surf:#fff;--line:#d8d5cc;--acc:#c99a10;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d0f1a;--fg:#f1f1f5;--mut:#9a9cb0;--surf:#171a2b;--line:#2a2e45;--acc:#f2c230;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d0f1a;--fg:#f1f1f5;--mut:#9a9cb0;--surf:#171a2b;--line:#2a2e45;--acc:#f2c230;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line)}
+h1{font-size:16px;margin:0;letter-spacing:.5px}
+h2{font-size:20px;margin:8px 0}
+nav{display:flex;gap:5px}
+nav button{background:var(--surf);color:var(--fg);border:1px solid var(--line);border-radius:999px;padding:7px 11px;font-size:13px;cursor:pointer}
+nav button.on{background:var(--acc);color:#1a1400;border-color:var(--acc);font-weight:700}
+main{max-width:520px;margin:0 auto;padding:20px 16px 40px;text-align:center}
+.note{color:var(--mut);font-size:13px;margin:6px 0 14px}
+.pack{width:190px;height:270px;margin:24px auto;border-radius:16px;background:linear-gradient(160deg,#2b1d6e,#6a2bd1 55%,#f2c230);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;cursor:pointer;box-shadow:0 12px 30px rgba(80,40,200,.35);font-weight:800;letter-spacing:2px;user-select:none}
+.pack small{font-weight:600;letter-spacing:1px;opacity:.85;margin-top:8px}
+.pack .big{font-size:44px}
+.pack.shake{animation:shake .7s}
+@keyframes shake{0%,100%{transform:rotate(0)}15%{transform:rotate(-6deg) scale(1.03)}30%{transform:rotate(6deg) scale(1.06)}45%{transform:rotate(-8deg) scale(1.08)}60%{transform:rotate(8deg) scale(1.1)}80%{transform:scale(1.2);opacity:.5}}
+.btn{background:var(--acc);color:#1a1400;border:0;border-radius:12px;padding:13px 22px;font-size:16px;font-weight:700;cursor:pointer;margin-top:10px}
+.row{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:10px}
+.stage{min-height:340px;display:flex;align-items:center;justify-content:center}
+.card{width:140px;height:196px;perspective:800px;cursor:pointer}
+.card.sm{width:104px;height:146px;cursor:default}
+.card.big{width:210px;height:294px}
+.in{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
+.card.up .in{transform:rotateY(180deg)}
+.f,.b{position:absolute;inset:0;border-radius:14px;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden}
+.b{background:linear-gradient(160deg,#2b1d6e,#6a2bd1);display:flex;align-items:center;justify-content:center;color:#f2c230;font-size:44px;font-weight:800}
+.f{transform:rotateY(180deg);padding:12px 10px;display:flex;flex-direction:column;align-items:center;text-align:center;color:#f1f1f5;background:linear-gradient(160deg,#171a2b,#2b1d6e)}
+.s3 .f{color:#1b1405}
+.f .rt{font-size:42px;font-weight:900;line-height:1;opacity:0;transform:scale(.3);transition:opacity .5s,transform .5s}
+.f .vk{font-size:16px;font-weight:800;margin-top:10px;text-transform:uppercase;letter-spacing:.5px;word-break:break-word;opacity:0;transition:opacity .5s}
+.f .wg{font-size:12px;margin-top:8px;opacity:0;transition:opacity .5s}
+.f .rr{margin-top:auto;font-size:11px;font-weight:800;letter-spacing:1.5px;opacity:0;transition:opacity .5s}
+.s1 .vk{opacity:1}.s2 .wg{opacity:.9}.s3 .rt{opacity:1;transform:scale(1)}.s3 .rr{opacity:1}
+.big .f{padding:20px 14px}.big .f .rt{font-size:72px}.big .f .vk{font-size:22px;margin-top:16px}.big .f .wg{font-size:15px;margin-top:12px}.big .f .rr{font-size:14px}
+.sm .f .rt{font-size:30px}.sm .f .vk{font-size:11px;margin-top:6px}.sm .f{padding:8px 6px}.sm .f .wg{font-size:9px;margin-top:4px}
+.r-brons.s3 .f{background:linear-gradient(160deg,#e0a46a,#9c6430)}
+.r-zilver.s3 .f{background:linear-gradient(160deg,#f1f3f5,#9aa3ad)}
+.r-goud.s3 .f{background:linear-gradient(160deg,#ffe58a,#d19a10)}
+.r-elite.s3 .f{background:linear-gradient(160deg,#7ff0e1,#2b7be0 60%,#7a3be0);color:#04112a}
+.r-icon.s3 .f{background:linear-gradient(120deg,#fff3b0,#f2c230,#ff8ad8,#7ff0e1,#fff3b0);background-size:300% 300%;animation:holo 3s linear infinite;color:#2a1500}
+@keyframes holo{to{background-position:300% 0}}
+.card.tense{animation:tense .8s}
+@keyframes tense{0%,100%{transform:none}25%{transform:translateX(-4px) rotate(-2deg)}50%{transform:translateX(4px) rotate(2deg)}75%{transform:translateX(-3px)}}
+.card.up.hit{animation:pop .5s}
+@keyframes pop{50%{transform:scale(1.12)}}
+.stat{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:6px 0 14px;font-size:13px;color:var(--mut)}
+.stat b{color:var(--fg)}
+.hide{display:none}
+</style>
+</head>
+<body>
+<header><h1>CIJFER PACKS</h1><nav><button id="tP">Packs</button><button id="tC">Collectie</button><button id="tK">Koppel</button></nav></header>
+<main id="app"></main>
+<script>
+// ===== DATALAAG =====
+// Zet hier later de URL van je eigen Somtoday-server. Leeg = demo-cijfers.
+var API_BASE="";
+function demo(){
+  return [
+    ["Wiskunde",7.4,2,"Hoofdstuk 4 toets"],["Nederlands",6.1,3,"Leesdossier"],["Engels",8.6,1,"Vocabulary test"],["Biologie",5.3,2,"Toets genetica"],["Geschiedenis",9.1,1,"SO Koude Oorlog"],
+    ["Natuurkunde",6.8,2,"Toets krachten"],["Scheikunde",7.9,3,"Proefwerk zuren"],["Economie",8.2,1,"SO Marktvormen"],["Aardrijkskunde",4.9,1,"Toets klimaat"],["Frans",6.5,2,"Examen lezen"],
+    ["Duits",7.2,1,"Grammatiktoets"],["LO",9.7,1,"Eindbeoordeling"],["Wiskunde",5.8,1,"Overhoring"],["Engels",7.7,2,"Spreekbeurt"],["Biologie",8.8,3,"Practicum cellen"]
+  ].map(function(g,i){return {id:i,vak:g[0],cijfer:g[1],weging:g[2],toets:g[3]}});
+}
+// Zet de resultaten van de Somtoday-API om naar kaarten (veldnamen nog te controleren met echte data).
+function mapSomtoday(items){
+  return items.map(function(r,i){
+    var c=parseFloat(String(r.geldendResultaat||r.resultaat||"").replace(",","."));
+    return {id:i,vak:(r.vak&&r.vak.naam)||"Vak",toets:r.omschrijving||"Toets",cijfer:c,weging:r.weging||1};
+  }).filter(function(g){return !isNaN(g.cijfer)&&g.cijfer>=1&&g.cijfer<=10});
+}
+function loadGrades(){
+  if(!API_BASE) return Promise.resolve(demo());
+  return fetch(API_BASE+"/api/grades",{credentials:"include"}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){return mapSomtoday(j.items||j)});
+}
+// ===== LOGICA =====
+var grades=[],packs=[],tk=0;
+var st={tab:"p",pack:0,phase:"closed",i:0,step:0,owned:[]};
+function setup(gs){
+  grades=gs;packs=[];
+  for(var i=0;i<gs.length;i+=5) packs.push(gs.slice(i,i+5).sort(function(a,b){return a.cijfer-b.cijfer}));
+  st.pack=0;st.phase="closed";st.i=0;st.step=0;st.owned=[];render();
+}
+function rar(c){
+  if(c>=9.5) return ["icon","ICON"];
+  if(c>=8.5) return ["elite","ELITE"];
+  if(c>=7) return ["goud","GOUD"];
+  if(c>=5.5) return ["zilver","ZILVER"];
+  return ["brons","BRONS"];
+}
+function nl(n){return n.toFixed(1).replace(".",",")}
+function card(g,cls,up){
+  var r=rar(g.cijfer);
+  return '<div class="card r-'+r[0]+cls+(up?' up s1 s2 s3':'')+'"><div class="in"><div class="b">?</div><div class="f"><div class="rt">'+Math.round(g.cijfer*10)+'</div><div class="vk">'+g.vak+'</div><div class="wg">'+g.toets+'</div><div class="rr">'+r[1]+' \u00b7 '+nl(g.cijfer)+'</div></div></div></div>';
+}
+function reveal(el,g){
+  var t=++tk;
+  el.className+=" up";
+  [[700,"s1"],[1900,"s2"],[3000,"tense"],[3800,"s3"]].forEach(function(s){
+    setTimeout(function(){
+      if(t!==tk) return;
+      if(s[1]=="s3"){
+        el.className=el.className.replace(" tense","")+" s3"+(g.cijfer>=8.5?" hit":"");
+        if(!st.owned.some(function(x){return x.id==g.id})) st.owned.push(g);
+        st.step=4;
+        document.getElementById("nt").textContent="Tik op de knop voor de volgende kaart";
+        document.getElementById("hint").className="";
+      } else el.className+=" "+s[1];
+    },s[0]);
+  });
+}
+function nav(){
+  ["P","C","K"].forEach(function(k){document.getElementById("t"+k).className=st.tab==k.toLowerCase()?"on":""});
+}
+function render(){
+  var a=document.getElementById("app");tk++;nav();
+  if(st.tab=="k"){
+    a.innerHTML='<h2>Somtoday koppelen</h2><p class="note">Het plan: je logt in op de officiele Somtoday-pagina, dus deze site krijgt je wachtwoord nooit te zien. Er worden alleen je cijfers opgehaald.</p><button class="btn" id="kb">Koppel met Somtoday</button><p class="note" id="ks">Status: demo-cijfers actief</p>';
+    document.getElementById("kb").onclick=function(){
+      if(!API_BASE) document.getElementById("ks").textContent="Nog geen server ingesteld. Dat is de volgende stap.";
+      else location.href=API_BASE+"/login";
+    };
+    return;
+  }
+  if(st.tab=="c"){
+    var o=st.owned.slice().sort(function(x,y){return y.cijfer-x.cijfer});
+    var avg=o.length?o.reduce(function(s,g){return s+g.cijfer},0)/o.length:0;
+    a.innerHTML='<div class="stat"><span>Kaarten: <b>'+o.length+'/'+grades.length+'</b></span>'+(o.length?'<span>Gemiddelde: <b>'+nl(avg)+'</b></span>':'')+'</div>'+
+      (o.length?'<div class="row">'+o.map(function(g){return card(g," sm",true)}).join("")+'</div>':'<p class="note">Nog geen kaarten. Open eerst een pack.</p>');
+    return;
+  }
+  if(st.pack>=packs.length){
+    a.innerHTML='<p class="note">Alle packs zijn geopend!</p><button class="btn" id="go">Bekijk je collectie</button>';
+    document.getElementById("go").onclick=function(){st.tab="c";render()};
+    return;
+  }
+  var p=packs[st.pack];
+  if(st.phase=="closed"){
+    a.innerHTML='<p class="note">Pack '+(st.pack+1)+' van '+packs.length+(API_BASE?'':' \u00b7 demo-cijfers')+'</p><div class="pack" id="pk"><span class="big">\u26bd</span>CIJFER PACK<small>TIK OM TE OPENEN</small></div>';
+    document.getElementById("pk").onclick=function(){
+      this.className="pack shake";
+      setTimeout(function(){st.phase="open";st.i=0;st.step=0;render()},700);
+    };
+  } else if(st.phase=="open"){
+    var g=p[st.i],last=st.i+1>=p.length;
+    st.step=0;
+    a.innerHTML='<p class="note" id="nt">Tik op de kaart om hem om te draaien</p><div class="stage">'+card(g," big",false)+'</div><p class="note">Kaart '+(st.i+1)+' van '+p.length+'</p><div id="hint" class="hide"><button class="btn" id="nx">'+(last?'Klaar':'Volgende kaart')+'</button></div>';
+    var el=a.querySelector(".card");
+    el.onclick=function(){if(st.step==0&&el.className.indexOf(" up")<0){st.step=1;reveal(el,g)}};
+    document.getElementById("nx").onclick=function(){
+      st.i++;if(st.i>=p.length) st.phase="sum";
+      render();
+    };
+  } else {
+    a.innerHTML='<p class="note">Pack geopend!</p><div class="row">'+p.map(function(g){return card(g," sm",true)}).join("")+'</div><button class="btn" id="nx">'+(st.pack+1<packs.length?'Volgende pack':'Bekijk collectie')+'</button>';
+    document.getElementById("nx").onclick=function(){
+      st.pack++;st.phase="closed";
+      if(st.pack>=packs.length) st.tab="c";
+      render();
+    };
+  }
+}
+document.getElementById("tP").onclick=function(){st.tab="p";render()};
+document.getElementById("tC").onclick=function(){st.tab="c";render()};
+document.getElementById("tK").onclick=function(){st.tab="k";render()};
+setup(demo());
+loadGrades().then(function(gs){if(API_BASE) setup(gs)}).catch(function(){});
+</script>
+</body>
+</html>
